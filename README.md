@@ -1,0 +1,34 @@
+# 孫の手 ／ Magonote
+
+痒い所に手が届く、ちょっとした便利道具の詰め合わせポータル。
+
+**公開URL:** https://choppermoon1623-tech.github.io/magonote/
+
+## コンセプト
+
+「やりたいことは一瞬なのに、いざ探すと会員登録・アップロード・広告・透かしが待っている」──
+その小さな面倒をなくすための道具置き場。
+
+収録の基準は3つ。
+
+1. **端末内で完結する**（アップロード不要 = 校務で扱うファイルも安心）
+2. **起動3秒・操作3ステップで終わる**
+3. **専用ソフトを入れるほどではない規模**
+
+## 収録中
+
+| 道具 | かゆい所 |
+|---|---|
+| [PDFツール](https://choppermoon1623-tech.github.io/pdf-tool/) | 紙に印刷して直して、また取り込む…をやめたい |
+| [画像形式変換](https://choppermoon1623-tech.github.io/image-convert/) | iPhoneの写真（HEIC）がパソコンで開けない |
+| [写真リサイザー](https://choppermoon1623-tech.github.io/photo-resizer/) | 添付できる容量を超えてしまった |
+| [大型タイマー](https://choppermoon1623-tech.github.io/big-timer/) | グループ活動の残り時間を全員に見せたい |
+
+## 道具を増やすとき
+
+1. `C:\Users\USER\dev\apps\<repo名>\` にアプリを作り、GitHub Pages で公開する
+2. このリポジトリの `index.html` の該当カテゴリに `a.card` を1つ足す
+   （`.nm` = 名前、`.ds` = 説明、`.itch` = 解消される「かゆい所」）
+3. カテゴリごとの件数バッジと検索は自動で追従します
+
+[H.M Works アプリポータル](https://choppermoon1623-tech.github.io/HMWorks/) のサブポータルです。

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孫の手｜痒い所に手が届く小道具集</title>
+<style>
+  :root{
+    --bg:#101418; --panel:#1a2129; --panel2:#202a35; --line:rgba(255,255,255,.08);
+    --text:#e8eef2; --muted:#8fa3af; --accent:#c8a35a; --accent2:#7fc4a0;
+    --jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--jp);background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+  .wrap{max-width:1000px;margin:0 auto;padding:36px 20px 60px}
+
+  header{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  header .mark{font-size:44px;line-height:1}
+  header h1{font-size:clamp(24px,5vw,36px);font-weight:900;letter-spacing:.02em}
+  header h1 span{color:var(--accent)}
+  header .lead{color:var(--muted);font-size:13.5px;margin-top:3px}
+
+  .concept{margin-top:18px;background:var(--panel);border:1px solid var(--line);
+    border-left:3px solid var(--accent);border-radius:12px;padding:14px 18px;font-size:13.5px}
+  .concept b{color:var(--accent2)}
+
+  .searchbar{margin:22px 0 4px}
+  .searchbar input{width:100%;padding:12px 16px;font-size:15px;font-family:var(--jp);
+    background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;outline:none}
+  .searchbar input:focus{border-color:var(--accent2)}
+
+  .cat{margin-top:28px}
+  .cat h2{font-size:16px;font-weight:900;display:flex;align-items:center;gap:10px}
+  .cat h2 .n{font-size:11px;font-weight:700;color:var(--muted);background:var(--panel2);
+    padding:2px 10px;border-radius:999px;border:1px solid var(--line)}
+  .cat h2::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:13px}
+  a.card{display:block;text-decoration:none;color:var(--text);background:var(--panel);
+    border:1px solid var(--line);border-radius:14px;padding:15px 16px 13px;transition:.15s}
+  a.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .card .nm{font-weight:900;font-size:15.5px;display:flex;align-items:center;gap:9px}
+  .card .nm .ic{font-size:20px}
+  .card .ds{font-size:12.5px;color:var(--muted);margin-top:5px}
+  .card .itch{font-size:11.5px;color:var(--accent2);margin-top:8px;opacity:.9}
+  .card .itch::before{content:"かゆい所 ▸ ";opacity:.6}
+  .hidden{display:none}
+  .empty{color:var(--muted);font-size:13px;padding:20px 4px;display:none}
+  .empty.show{display:block}
+
+  .soon{margin-top:34px;background:var(--panel);border:1px dashed var(--line);
+    border-radius:13px;padding:16px 18px}
+  .soon h3{font-size:13.5px;font-weight:900;color:var(--muted)}
+  .soon ul{margin-top:9px;display:flex;flex-wrap:wrap;gap:7px;list-style:none}
+  .soon li{font-size:12px;color:var(--muted);background:var(--panel2);
+    border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+
+  footer{margin-top:44px;border-top:1px solid var(--line);padding-top:18px;
+    color:var(--muted);font-size:12px;display:flex;justify-content:space-between;
+    gap:12px;flex-wrap:wrap}
+  footer a{color:var(--accent2);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="mark">🖐️</div>
+    <div>
+      <h1>孫の手<span>／ Magonote</span></h1>
+      <div class="lead">痒い所に手が届く、ちょっとした便利道具の詰め合わせ</div>
+    </div>
+  </header>
+
+  <div class="concept">
+    「やりたいことは一瞬なのに、いざ探すと<b>会員登録・アップロード・広告・透かし</b>が待っている」──
+    そういう小さな面倒をなくすための道具置き場です。<br>
+    どれも<b>ブラウザだけで動き、ファイルは端末の外に出ません</b>。インストールも登録も不要、開けばすぐ使えます。
+  </div>
+
+  <div class="searchbar">
+    <input id="q" type="search" placeholder="🔍 やりたいことで探す（例：HEIC、PDF、まとめて、タイマー）">
+  </div>
+
+  <section class="cat" data-cat>
+    <h2>📄 書類・PDF <span class="n"></span></h2>
+    <div class="cards">
+      <a class="card" href="https://choppermoon1623-tech.github.io/pdf-tool/">
+        <div class="nm"><span class="ic">📄</span>PDFツール</div>
+        <div class="ds">結合・分割・回転・ページ削除・ページ番号付与に加え、テキスト追加・白塗り・印鑑の貼り付けまで</div>
+        <div class="itch">紙に印刷して直して、また取り込む…をやめたい</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="cat" data-cat>
+    <h2>🖼️ 画像 <span class="n"></span></h2>
+    <div class="cards">
+      <a class="card" href="https://choppermoon1623-tech.github.io/image-convert/">
+        <div class="nm"><span class="ic">🔄</span>画像形式変換</div>
+        <div class="ds">HEIC・WebP・PNG・JPEG をまとめて相互変換。長辺サイズの上限指定つき、ZIPで一括保存</div>
+        <div class="itch">iPhoneの写真（HEIC）がパソコンで開けない</div>
+      </a>
+      <a class="card" href="https://choppermoon1623-tech.github.io/photo-resizer/">
+        <div class="nm"><span class="ic">📐</span>写真リサイザー</div>
+        <div class="ds">写真をまとめて指定サイズに縮小</div>
+        <div class="itch">添付できる容量を超えてしまった</div>
+      </a>
+    </div>
+  </section>
+
+  <section class="cat" data-cat>
+    <h2>🏫 教室・進行 <span class="n"></span></h2>
+    <div class="cards">
+      <a class="card" href="https://choppermoon1623-tech.github.io/big-timer/">
+        <div class="nm"><span class="ic">⏱️</span>大型タイマー</div>
+        <div class="ds">教室の後ろからでも読める特大表示。残り1分で黄色・10秒で赤、終了チャイムつき。ストップウォッチにも切替可</div>
+        <div class="itch">グループ活動の残り時間を全員に見せたい</div>
+      </a>
+    </div>
+  </section>
+
+  <div class="empty" id="empty">該当する道具がありませんでした。</div>
+
+  <div class="soon">
+    <h3>◇ そのうち生やしたいもの（覚え書き）</h3>
+    <ul>
+      <li>画像⇄PDF変換</li>
+      <li>PDF軽量化</li>
+      <li>差し込み印刷（名簿CSV→賞状）</li>
+      <li>面付け・小冊子</li>
+      <li>一括リネーム</li>
+      <li>モザイク・顔ぼかし</li>
+      <li>証明写真メーカー</li>
+      <li>テキスト整形</li>
+      <li>QRコード生成</li>
+      <li>ランダム指名・班分け</li>
+      <li>騒音メーター</li>
+    </ul>
+  </div>
+
+  <footer>
+    <span>孫の手 ／ H.M Works</span>
+    <a href="https://choppermoon1623-tech.github.io/HMWorks/">H.M Works アプリポータルへ →</a>
+  </footer>
+</div>
+
+<script>
+(function(){
+  // カード数のバッジ表示
+  document.querySelectorAll('[data-cat]').forEach(sec => {
+    sec.querySelector('.n').textContent = sec.querySelectorAll('a.card').length;
+  });
+
+  // やりたいことで絞り込み
+  const q = document.getElementById('q'), empty = document.getElementById('empty');
+  q.addEventListener('input', () => {
+    const t = q.value.trim().toLowerCase();
+    let hit = 0;
+    document.querySelectorAll('[data-cat]').forEach(sec => {
+      let n = 0;
+      sec.querySelectorAll('a.card').forEach(c => {
+        const show = !t || c.textContent.toLowerCase().indexOf(t) >= 0;
+        c.classList.toggle('hidden', !show);
+        if(show) n++;
+      });
+      sec.classList.toggle('hidden', n === 0);
+      sec.querySelector('.n').textContent = n;
+      hit += n;
+    });
+    empty.classList.toggle('show', hit === 0);
+  });
+})();
+</script>
+</body>
+</html>
