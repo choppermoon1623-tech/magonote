@@ -25,6 +25,7 @@
 | [大型タイマー](https://choppermoon1623-tech.github.io/big-timer/) | グループ活動の残り時間を全員に見せたい |
 | [QR提出チェック](https://choppermoon1623-tech.github.io/submit-check/) | 誰が出していないか、名簿と突き合わせて数えるのが大変 |
 | [QRコード工房](https://choppermoon1623-tech.github.io/qr-studio/) | QRを1個作りたいだけなのに、生成サイトは広告と透かしだらけ |
+| [テキスト整形](https://choppermoon1623-tech.github.io/text-formatter/) | PDFからコピーした文章が変な改行だらけ |
 
 ## 道具を増やすとき
 
