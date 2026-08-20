@@ -23,6 +23,7 @@
 | [画像形式変換](https://choppermoon1623-tech.github.io/image-convert/) | iPhoneの写真（HEIC）がパソコンで開けない |
 | [写真リサイザー](https://choppermoon1623-tech.github.io/photo-resizer/) | 添付できる容量を超えてしまった |
 | [大型タイマー](https://choppermoon1623-tech.github.io/big-timer/) | グループ活動の残り時間を全員に見せたい |
+| [QR提出チェック](https://choppermoon1623-tech.github.io/submit-check/) | 誰が出していないか、名簿と突き合わせて数えるのが大変 |
 
 ## 道具を増やすとき
 
