@@ -26,6 +26,7 @@
 | [QR提出チェック](https://choppermoon1623-tech.github.io/submit-check/) | 誰が出していないか、名簿と突き合わせて数えるのが大変 |
 | [QRコード工房](https://choppermoon1623-tech.github.io/qr-studio/) | QRを1個作りたいだけなのに、生成サイトは広告と透かしだらけ |
 | [テキスト整形](https://choppermoon1623-tech.github.io/text-formatter/) | PDFからコピーした文章が変な改行だらけ |
+| [班分けメーカー](https://choppermoon1623-tech.github.io/group-maker/) | 配慮しながらの班分けが毎回パズルになっている |
 
 ## 道具を増やすとき
 
