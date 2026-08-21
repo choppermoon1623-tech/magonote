@@ -29,6 +29,7 @@
 | [班分けメーカー](https://choppermoon1623-tech.github.io/group-maker/) | 配慮しながらの班分けが毎回パズルになっている |
 | [差し込み印刷](https://choppermoon1623-tech.github.io/mail-merge/) | 賞状の名前を1枚ずつ手で打ち替えている |
 | [当番表メーカー](https://choppermoon1623-tech.github.io/toban-maker/) | 学期はじめのたびに当番表を画用紙で手作りしている |
+| [トーナメント・対戦表](https://choppermoon1623-tech.github.io/tournament-maker/) | 球技大会のトーナメントの線を毎回手描きしている |
 
 ## 道具を増やすとき
 
