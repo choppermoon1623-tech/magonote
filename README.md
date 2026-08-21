@@ -40,5 +40,8 @@
 2. このリポジトリの `index.html` の該当カテゴリに `a.card` を1つ足す
    （`.nm` = 名前、`.ds` = 説明、`.itch` = 解消される「かゆい所」）
 3. カテゴリごとの件数バッジと検索は自動で追従します
+4. 説明書も更新する：`manual-src/` の該当mdに「## アプリ名／ひとこと／使い方／便利機能／注意・コツ」を追記し、
+   `build_manual.py` のカテゴリ表（CATS）にアイコン・名前・repo名を足して `python build_manual.py` を実行すると
+   `manual.html` が再生成されます
 
 [H.M Works アプリポータル](https://choppermoon1623-tech.github.io/HMWorks/) のサブポータルです。
