@@ -3,6 +3,7 @@
 痒い所に手が届く、ちょっとした便利道具の詰め合わせポータル。
 
 **公開URL:** https://choppermoon1623-tech.github.io/magonote/
+**説明書:** https://choppermoon1623-tech.github.io/magonote/manual.html （全アプリの使い方ガイド。`manual.html`）
 
 ## コンセプト
 

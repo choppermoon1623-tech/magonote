@@ -28,6 +28,10 @@
   .searchbar input{width:100%;padding:12px 16px;font-size:15px;font-family:var(--jp);
     background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;outline:none}
   .searchbar input:focus{border-color:var(--accent2)}
+  .manual-link{margin-top:8px;font-size:12.5px;text-align:right}
+  .manual-link a{color:var(--accent2);text-decoration:none;border:1px solid var(--line);
+    background:var(--panel);padding:5px 12px;border-radius:999px;display:inline-block}
+  .manual-link a:hover{border-color:var(--accent2)}
 
   .cat{margin-top:28px}
   .cat h2{font-size:16px;font-weight:900;display:flex;align-items:center;gap:10px}
@@ -74,6 +78,7 @@
 
   <div class="searchbar">
     <input id="q" type="search" placeholder="🔍 やりたいことで探す（例：HEIC、PDF、まとめて、タイマー）">
+    <div class="manual-link"><a href="./manual.html">📖 全アプリの使い方は「説明書」へ →</a></div>
   </div>
 
   <section class="cat" data-cat>
@@ -221,6 +226,7 @@
 
   <footer>
     <span>孫の手 ／ H.M Works</span>
+    <a href="./manual.html">📖 説明書</a>
     <a href="https://choppermoon1623-tech.github.io/HMWorks/">H.M Works アプリポータルへ →</a>
   </footer>
 </div>

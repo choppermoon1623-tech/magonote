@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孫の手 説明書</title>
+<style>
+  :root{
+    --bg:#101418; --panel:#1a2129; --panel2:#202a35; --line:rgba(255,255,255,.08);
+    --text:#e8eef2; --muted:#8fa3af; --accent:#c8a35a; --accent2:#7fc4a0; --warn:#e0b96a;
+    --jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--jp);background:var(--bg);color:var(--text);line-height:1.75;min-height:100vh}
+  .wrap{max-width:1000px;margin:0 auto;padding:36px 20px 60px}
+
+  header{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  header .mark{font-size:44px;line-height:1}
+  header h1{font-size:clamp(24px,5vw,34px);font-weight:900;letter-spacing:.02em}
+  header h1 span{color:var(--accent)}
+  header .lead{color:var(--muted);font-size:13.5px;margin-top:3px}
+  .backlink{margin-left:auto;align-self:center}
+  .backlink a{color:var(--accent2);text-decoration:none;font-size:13px;border:1px solid var(--line);
+    background:var(--panel);padding:8px 14px;border-radius:999px;display:inline-block}
+  .backlink a:hover{border-color:var(--accent2)}
+
+  .common{margin-top:18px;background:var(--panel);border:1px solid var(--line);
+    border-left:3px solid var(--accent);border-radius:12px;padding:14px 18px;font-size:13.5px}
+  .common b{color:var(--accent2)}
+  .common ul{margin:6px 0 0 1.3em}
+
+  .searchbar{margin:20px 0 4px}
+  .searchbar input{width:100%;padding:12px 16px;font-size:15px;font-family:var(--jp);
+    background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;outline:none}
+  .searchbar input:focus{border-color:var(--accent2)}
+
+  .toc{margin-top:16px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:12.5px}
+  .toc-cat{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;padding:3px 0}
+  .toc-h{color:var(--muted);font-weight:700;min-width:8.5em}
+  .toc a{color:var(--accent2);text-decoration:none;white-space:nowrap}
+  .toc a:hover{text-decoration:underline}
+
+  .cat{margin-top:30px}
+  .cat h2{font-size:17px;font-weight:900;display:flex;align-items:center;gap:10px}
+  .cat h2 .n{font-size:11px;font-weight:700;color:var(--muted);background:var(--panel2);
+    padding:2px 10px;border-radius:999px;border:1px solid var(--line)}
+  .cat h2::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  article.app{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px 16px;margin-top:14px;scroll-margin-top:14px}
+  article.app h3{font-size:16.5px;font-weight:900;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  article.app h3 .ic{font-size:21px}
+  article.app h3 .open{margin-left:auto;font-size:12px;font-weight:700;color:var(--accent);
+    text-decoration:none;border:1px solid rgba(200,163,90,.4);padding:4px 12px;border-radius:999px}
+  article.app h3 .open:hover{background:rgba(200,163,90,.12)}
+  .lede{color:var(--muted);font-size:13px;margin-top:6px}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:6px 26px;margin-top:12px}
+  @media(max-width:760px){.cols{grid-template-columns:1fr}}
+  article.app h4{font-size:12.5px;font-weight:900;color:var(--accent);margin:10px 0 5px;letter-spacing:.04em}
+  article.app ol{margin-left:1.4em;font-size:13px}
+  article.app ol li{margin:5px 0}
+  article.app ul{margin-left:1.3em;font-size:12.5px;list-style:none}
+  article.app ul li{margin:5px 0;position:relative;padding-left:2px}
+  article.app ul.feat li::before{content:"✔";color:var(--accent2);position:absolute;left:-1.2em}
+  article.app ul.note{color:#d9cba8}
+  article.app ul.note li::before{content:"！";color:var(--warn);font-weight:900;position:absolute;left:-1.2em}
+  b.ui{color:var(--accent2);font-weight:700}
+
+  .hidden{display:none}
+  .empty{color:var(--muted);font-size:13px;padding:20px 4px;display:none}
+  .empty.show{display:block}
+  .totop{position:fixed;right:18px;bottom:18px;background:var(--panel2);border:1px solid var(--line);
+    color:var(--text);border-radius:999px;padding:9px 14px;font-size:13px;text-decoration:none}
+  .totop:hover{border-color:var(--accent)}
+
+  footer{margin-top:44px;border-top:1px solid var(--line);padding-top:18px;
+    color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  footer a{color:var(--accent2);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  @media print{
+    :root{--bg:#fff;--panel:#fff;--panel2:#f2f2f2;--line:#bbb;--text:#111;--muted:#555;
+      --accent:#7a5c1e;--accent2:#1e6b4c;--warn:#8a6100}
+    body{background:#fff;color:#111;font-size:11.5px}
+    .searchbar,.toc,.totop,.backlink,header .lead{display:none !important}
+    .wrap{max-width:none;padding:0}
+    article.app{break-inside:avoid;border:1px solid #bbb;box-shadow:none;margin-top:10px;padding:12px 14px}
+    article.app ul.note{color:#7a5c1e}
+    .cat h2{break-after:avoid}
+    a{color:inherit;text-decoration:none}
+    article.app h3 .open{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="mark">🖐️</div>
+    <div>
+      <h1>孫の手 <span>説明書</span></h1>
+      <div class="lead">収録アプリの使い方ガイド（印刷して職員室に置いても使えます）</div>
+    </div>
+    <div class="backlink"><a href="./">← 孫の手トップへ</a></div>
+  </header>
+
+  <div class="common">
+    <b>全アプリ共通のこと</b>
+    <ul>
+      <li>どれも<b>ブラウザだけで動き、ファイルや名簿が端末の外に送信されることはありません</b>。インストール・会員登録も不要です。</li>
+      <li>入力内容の自動保存は「そのパソコンの・そのブラウザの中」に記憶されます。別のPCには引き継がれないので、大事なデータは各アプリの保存機能でファイルに残してください。</li>
+      <li>推奨ブラウザは <b>Chrome / Edge</b> です（一部機能はこの2つでのみ動きます）。</li>
+      <li>印刷がずれるときは、印刷画面で「余白：なし」「倍率：100%」になっているか確認してください。</li>
+    </ul>
+  </div>
+
+  <div class="searchbar">
+    <input id="q" type="search" placeholder="🔍 アプリ名・やりたいことで探す（例：ふりがな、ZIP、印刷）">
+  </div>
+
+  <nav class="toc"><div class="toc-cat"><span class="toc-h">📄 書類・PDF</span><a href="#pdf-tool">📄 PDFツール</a><a href="#print-scanner">🧾 プリントスキャナー</a><a href="#mail-merge">🏆 差し込み印刷</a><a href="#text-formatter">📝 テキスト整形</a><a href="#furigana">🈷️ ふりがな付け</a><a href="#booklet-maker">📖 面付け・小冊子</a></div><div class="toc-cat"><span class="toc-h">🖼️ 画像</span><a href="#image-convert">🔄 画像形式変換</a><a href="#photo-resizer">📐 写真リサイザー</a><a href="#id-photo">🪪 証明写真メーカー</a><a href="#face-mosaic">🙈 顔モザイク</a></div><div class="toc-cat"><span class="toc-h">🗂️ ファイル整理</span><a href="#file-renamer">🏷️ 一括リネーム</a></div><div class="toc-cat"><span class="toc-h">🔗 QR・共有</span><a href="#qr-studio">🔳 QRコード工房</a></div><div class="toc-cat"><span class="toc-h">🎵 音声</span><a href="#audio-studio">🎙️ オーディオスタジオ</a></div><div class="toc-cat"><span class="toc-h">🏫 教室・進行</span><a href="#big-timer">⏱️ 大型タイマー</a><a href="#name-roulette">🎯 ランダム指名ルーレット</a><a href="#submit-check">✅ QR提出チェック</a><a href="#group-maker">🧩 班分けメーカー</a><a href="#seat-maker">🪑 席替えメーカー</a><a href="#toban-maker">🧹 当番表メーカー</a><a href="#tournament-maker">🏆 トーナメント・対戦表</a><a href="#jikanwari-maker">🗓️ 週時間割メーカー</a></div></nav>
+
+
+  <section class="cat" data-cat>
+    <h2 id="cat-書類・PDF">📄 書類・PDF <span class="n"></span></h2>
+    
+    <article class="app" id="pdf-tool" data-app>
+      <h3><span class="ic">📄</span>PDFツール
+        <a class="open" href="https://choppermoon1623-tech.github.io/pdf-tool/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">複数のPDFや画像をまとめて、並べ替え・回転・削除・書き込み・軽量化までできる、PDFの万能ツールです。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>画面に PDF や画像をドラッグ&amp;ドロップするか、「<b class=\"ui\">＋ PDFを追加</b>」を押してファイルを選びます（複数可。PNG/JPEG/WebP は1枚1ページのPDFになります）</li><li>ページのサムネイルをドラッグして順番を並べ替えます。ページをクリックすると選択できます</li><li>選択したページは「<b class=\"ui\">⟲ 左回転</b>」「<b class=\"ui\">⟳ 右回転</b>」「<b class=\"ui\">選択ページを削除</b>」で整えます</li><li>ページをダブルクリックすると編集画面が開き、「<b class=\"ui\">あ テキスト追加</b>」「<b class=\"ui\">▉ 白塗り(修正)</b>」「<b class=\"ui\">🖼 画像・印鑑</b>」で書き込めます。終わったら「<b class=\"ui\">完了</b>」を押します</li><li>必要なら「<b class=\"ui\">ページ番号・ヘッダー</b>」を押して、「<b class=\"ui\">ページ番号を付ける</b>」や「<b class=\"ui\">ヘッダー(上部の文字)を付ける</b>」にチェックを入れ「<b class=\"ui\">OK</b>」を押します</li><li>「<b class=\"ui\">💾 保存(結合して保存)</b>」を押すと、今の並び順どおりの1つのPDFが保存されます</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">🔃 向きの自動修正</b>」…文字の向きから逆さま・横向きのページを検出して自動で直します</li><li>「<b class=\"ui\">選択ページを別PDFに保存(分離)</b>」「<b class=\"ui\">1ページずつ分割保存</b>」…必要なページだけ取り出せます</li><li>「<b class=\"ui\">🖼 画像で保存</b>」…ページをPNG/JPEGに変換。解像度は「<b class=\"ui\">150dpi(画面用)</b>」「<b class=\"ui\">200dpi(標準)</b>」「<b class=\"ui\">300dpi(印刷用)</b>」から選べます</li><li>「<b class=\"ui\">🪶 軽量化して保存</b>」…画質を「<b class=\"ui\">きれい(150dpi)</b>」「<b class=\"ui\">標準(110dpi・メール添付向き)</b>」「<b class=\"ui\">最小(90dpi)</b>」から選んでファイルを小さくできます</li><li>「<b class=\"ui\">全選択 / 解除</b>」…全ページをまとめて選択・解除できます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>軽量化すると全ページが画像に変換し直されるため、文字のコピー・検索はできなくなります（編集内容・ページ番号・ヘッダーはそのまま焼き込まれます）</li><li>ページ番号・ヘッダーの設定は「<b class=\"ui\">保存時に全ページへ適用</b>」されます。設定中はボタンに「<b class=\"ui\">●設定中</b>」の印が付きます</li><li>やり直したいときは「<b class=\"ui\">すべてクリア</b>」で最初からやり直せます（元のファイルは消えません）</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="print-scanner" data-app>
+      <h3><span class="ic">🧾</span>プリントスキャナー
+        <a class="open" href="https://choppermoon1623-tech.github.io/print-scanner/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">書類や板書を撮った写真を、傾き補正＋影とりできれいなスキャン風に仕上げ、まとめて1つのPDFにできます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>書類・板書・掲示物を撮った写真を画面にドロップするか、「<b class=\"ui\">🖼️ 写真を選ぶ</b>」または「<b class=\"ui\">📷 カメラで撮る</b>」を押します（複数枚OK）</li><li>四隅が自動で検出され、まっすぐ・明るく補正されます</li><li>仕上がりを直したいページはサムネイルをタップし、「<b class=\"ui\">① 範囲</b>」タブで四隅をドラッグして紙のフチに合わせます</li><li>「<b class=\"ui\">② 仕上がり</b>」タブで「<b class=\"ui\">元のまま</b>」「<b class=\"ui\">カラー</b>」「<b class=\"ui\">グレー</b>」「<b class=\"ui\">白黒</b>」から仕上がりを選び、必要なら「<b class=\"ui\">⟲ 回転</b>」「<b class=\"ui\">⟳ 回転</b>」で向きを直します</li><li>「<b class=\"ui\">✓ 決定</b>」を押して一覧に戻ります</li><li>用紙を「<b class=\"ui\">A4(自動で縦横)</b>」か「<b class=\"ui\">画像サイズのまま</b>」から選び、ファイル名を入力して「<b class=\"ui\">📄 PDFで保存</b>」を押します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">🔍 自動検出</b>」…紙の四隅をもう一度自動で探します。「<b class=\"ui\">⛶ 全範囲</b>」で写真全体を使うこともできます</li><li>「<b class=\"ui\">＋ 写真を追加</b>」…あとから写真を足して複数ページのPDFにできます</li><li>四隅の調整中はルーペ（拡大表示）が出るので、細かい位置合わせがしやすくなっています</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>処理はすべてブラウザの中だけで行われ、写真が端末の外に送信されることはありません</li><li>「<b class=\"ui\">全て削除</b>」を押すと読み込んだページが全部消えるので注意してください</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="mail-merge" data-app>
+      <h3><span class="ic">🏆</span>差し込み印刷
+        <a class="open" href="https://choppermoon1623-tech.github.io/mail-merge/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">Excelの名簿を貼り付けるだけで、賞状・はがき宛名・カードに一人ずつ名前などを差し込んで全員分印刷できます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">① 名簿データ</b>」の欄に、Excelからコピーした名簿をそのまま貼り付けます（1行目は見出し）。「<b class=\"ui\">1行目を見出しにする</b>」のチェックを確認します</li><li>「<b class=\"ui\">② 用紙とひな形</b>」で用紙（「<b class=\"ui\">A4 たて</b>」「<b class=\"ui\">A4 よこ</b>」「<b class=\"ui\">B5 たて</b>」「<b class=\"ui\">はがき たて</b>」）を選びます。「<b class=\"ui\">🏆 賞状のひな形</b>」「<b class=\"ui\">📮 はがき宛名</b>」を押すと、ひな形が入ります</li><li>必要なら「<b class=\"ui\">🖼️ 背景画像(賞状の台紙など)</b>」を押して台紙の画像を設定します</li><li>「<b class=\"ui\">③ テキスト</b>」で「<b class=\"ui\">＋ テキストを追加</b>」を押すか、プレビューの文字をクリックして編集します。文中の {見出し名} がその人のデータに置き換わります</li><li>文字サイズ・書体（「<b class=\"ui\">ゴシック</b>」「<b class=\"ui\">明朝</b>」「<b class=\"ui\">教科書体</b>」）・そろえ・色・「<b class=\"ui\">太字</b>」「<b class=\"ui\">縦書き</b>」などを整えます</li><li>「<b class=\"ui\">← 前の人</b>」「<b class=\"ui\">次の人 →</b>」で一人ずつプレビューを確認します</li><li>「<b class=\"ui\">🖨️ 全員分を印刷</b>」を押して印刷します。一部だけ印刷したいときは「<b class=\"ui\">印刷範囲</b>」に「<b class=\"ui\">〜件目</b>」を入力します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>プレビュー上でテキストをドラッグ移動でき、選択中は矢印キーで1mm（Shiftキーで0.1mm）ずつ動かせます</li><li>テキストの「<b class=\"ui\">複製</b>」ボタンで同じ設定の文字枠をすぐ増やせます</li><li>「<b class=\"ui\">背景も印刷する</b>」のチェックを外すと、印刷済みの賞状用紙に文字だけを乗せて印刷できます</li><li>位置は「<b class=\"ui\">横位置 mm</b>」「<b class=\"ui\">縦位置 mm</b>」で数値でも指定できるので、市販用紙への位置合わせに便利です</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>名簿データは端末の外に出ません（貼り付けたデータはこの端末内だけで処理されます）</li><li>印刷はブラウザの印刷画面から行われます。用紙サイズは自動設定（余白0）されるので、印刷画面の用紙サイズがアプリの設定と合っているか確認してください</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="text-formatter" data-app>
+      <h3><span class="ic">📝</span>テキスト整形
+        <a class="open" href="https://choppermoon1623-tech.github.io/text-formatter/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">PDFから貼り付けたときの変な改行、全角半角のばらつき、名簿の区切りなどを、貼り付けるだけで一瞬で整えます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">入力</b>」欄に文章や名簿を貼り付けます（「<b class=\"ui\">貼り付け</b>」ボタンでも入れられます）</li><li>まずは上のワンタッチボタン「<b class=\"ui\">📄 PDFの貼り付けを直す</b>」「<b class=\"ui\">👥 名簿を1行1人に</b>」「<b class=\"ui\">📊 Excelへ(改行→タブ)</b>」「<b class=\"ui\">🔢 数字・英字を半角に</b>」を試します。結果は右側（スマホは下）に即時表示されます</li><li>細かく直したいときは「<b class=\"ui\">🧹 改行・空白の掃除</b>」「<b class=\"ui\">🔡 全角 ⇄ 半角</b>」「<b class=\"ui\">🔤 かな・機種依存文字</b>」「<b class=\"ui\">📑 行の並べ替え・整理</b>」「<b class=\"ui\">🔢 行頭の番号・記号</b>」「<b class=\"ui\">🔁 置換</b>」の各設定を変えます</li><li>仕上がったら「<b class=\"ui\">📋 コピー</b>」を押して、WordやExcelに貼り付けます</li><li>設定をやり直したいときは「<b class=\"ui\">↺ 全部リセット</b>」を押します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">文字数上限</b>」に数字（例:300）を入れると、所見など字数制限のある原稿で超えた分が赤く表示されます。文字数・行数・400字詰め換算も常に表示されます</li><li>「<b class=\"ui\">機種依存文字を変換</b>」にチェックすると ①→(1)、㈱→(株) などの安全な表記に置き換わります。見つかった機種依存文字は結果の下に一覧表示され、結果の中でも黄色くマークされます</li><li>「<b class=\"ui\">⬅ 入力にする</b>」…結果を入力欄に移して、続けて別の整形をかけられます</li><li>並べ替え（昇順・降順・逆順・シャッフル）や「<b class=\"ui\">重複する行を削除</b>」で名簿の整理ができます</li><li>置換は上から順に3つまで設定でき、「<b class=\"ui\">正規表現</b>」にも対応しています</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>文字は端末の外に出ません（すべてこの端末内で処理されます）</li><li>人名の異体字（髙・﨑 など）は自動では変換されないので、必要なら手で直してください</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="furigana" data-app>
+      <h3><span class="ic">🈷️</span>ふりがな付け
+        <a class="open" href="https://choppermoon1623-tech.github.io/furigana/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">おたよりやプリントの文章を貼り付けると、学年に合わせて漢字にふりがなを自動で振り、印刷やコピーができます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>画面を開くと「<b class=\"ui\">辞書を読み込んでいます…</b>」と表示されます。読み込みが終わるまで少し待ちます（初回のみ約17MB、2回目からはすぐ開きます）</li><li>「<b class=\"ui\">📄 文章</b>」の欄に文章を貼り付けます。お試しには「<b class=\"ui\">例文を入れる</b>」ボタンが使えます</li><li>「<b class=\"ui\">⚙️ ふりがなの付け方</b>」で学年を選びます。「<b class=\"ui\">すべての漢字に付ける（総ルビ）</b>」〜「<b class=\"ui\">小6までに習う漢字には付けない</b>」から選択できます（初期設定は「<b class=\"ui\">小2までに習う漢字には付けない</b>」）</li><li>右側の白い紙面に、ふりがな付きの仕上がりが自動で表示されます</li><li>読みが違う漢字は、プレビュー上でその漢字をクリックすると、その場で読みを入力し直せます（直した読みは緑色で表示。空にするとふりがな無し、「<b class=\"ui\">×</b>」を入力すると元に戻ります）</li><li>「<b class=\"ui\">🖨️ 印刷</b>」で印刷するか、「<b class=\"ui\">📋 コピー（Word等へ）</b>」でルビ付きのまま貼り付けられる形式でコピーします</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">📖 読みの登録</b>」欄に「<b class=\"ui\">漢字＝よみ</b>」の形で1行ずつ書くと、子どもの名前など特殊な読みを優先して付けられます（例: 結愛＝ゆあ）</li><li>「<b class=\"ui\">同じ言葉は最初の1回だけ付ける</b>」にチェックすると、繰り返し出る言葉のふりがなを1回目だけにできます</li><li>「<b class=\"ui\">縦書き</b>」「<b class=\"ui\">明朝体</b>」のチェックで、紙面の見た目を切り替えられます（印刷にも反映されます）</li><li>「<b class=\"ui\">📋 括弧書きでコピー</b>」を使うと「<b class=\"ui\">漢字（かんじ）</b>」の形式でコピーでき、ルビ非対応のソフトにも貼り付けられます</li><li>入力した文章・設定は自動保存され、次に開いたときに復元されます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>文章は端末の外に送信されません</li><li>「<b class=\"ui\">コピー（Word等へ）</b>」で貼り付け先がルビに対応していない場合は、「<b class=\"ui\">括弧書きでコピー</b>」を使ってください</li><li>学年別の判定は2020年度からの学年別漢字配当表（1026字）に基づいています</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="booklet-maker" data-app>
+      <h3><span class="ic">📖</span>面付け・小冊子
+        <a class="open" href="https://choppermoon1623-tech.github.io/booklet-maker/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">PDFを「<b class=\"ui\">両面印刷して半分に折るだけで中綴じ冊子になる</b>」ページ順に並べ替えたり、1枚の用紙に2面・4面・8面を割り付けたPDFを作れます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>PDF や画像（JPEG/PNG/WebP）を画面にドロップするか、「<b class=\"ui\">ファイルを選ぶ</b>」を押します（複数まとめてOK・ページ順に連結されます）</li><li>「<b class=\"ui\">📕 小冊子(中綴じ)</b>」か「<b class=\"ui\">🔢 面付け(N-up)</b>」のタブを選びます</li><li>小冊子なら、用紙（「<b class=\"ui\">A4(仕上がりA5)</b>」「<b class=\"ui\">A3(仕上がりA4)</b>」「<b class=\"ui\">B4(仕上がりB5)</b>」「<b class=\"ui\">B5(仕上がりB6)</b>」）と綴じ方向（「<b class=\"ui\">左綴じ(横書き)</b>」「<b class=\"ui\">右綴じ(縦書き・国語)</b>」）を選びます</li><li>面付けなら、用紙・面数（「<b class=\"ui\">2面</b>」「<b class=\"ui\">4面</b>」「<b class=\"ui\">8面</b>」）・並べ方（「<b class=\"ui\">同じページを並べる(裁断用)</b>」「<b class=\"ui\">ページ順に割り付け(節約印刷)</b>」）を選びます</li><li>プレビュー（印刷される用紙そのまま）で仕上がりを確認します</li><li>「<b class=\"ui\">💾 PDFを保存</b>」を押し、保存されたPDFを印刷します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">切り取り線を入れる</b>」…面付け（裁断用）のとき、切る位置の線を自動で入れられます</li><li>「<b class=\"ui\">同じページを並べる(裁断用)</b>」…小テストや連絡カードをA4に2枚・4枚並べて、裁断して配れます</li><li>「<b class=\"ui\">ページ順に割り付け(節約印刷)</b>」…配布資料の用紙節約に使えます</li><li>「<b class=\"ui\">別のファイルにする</b>」でファイルをすぐ差し替えられます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>ファイルはこの端末の中だけで処理され、どこにも送信されません</li><li>小冊子の印刷のコツ:「<b class=\"ui\">両面印刷(短辺とじ)</b>」で印刷し、印刷順のまま重ねて半分に折り、折り目を綴じれば完成です</li><li>裏面が上下逆さまに出るプリンタでは、「<b class=\"ui\">長辺とじ</b>」に変えるか「<b class=\"ui\">裏面を180°回転</b>」をオンにしてください</li></ul>
+        </div>
+      </div>
+    </article>
+  </section>
+  <section class="cat" data-cat>
+    <h2 id="cat-画像">🖼️ 画像 <span class="n"></span></h2>
+    
+    <article class="app" id="image-convert" data-app>
+      <h3><span class="ic">🔄</span>画像形式変換
+        <a class="open" href="https://choppermoon1623-tech.github.io/image-convert/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">iPhoneのHEIC写真などを、JPEG・PNG・WebPにまとめて変換できます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">ここに画像をドラッグ＆ドロップ</b>」の枠に画像を入れるか、枠をクリックして選択します（複数枚OK。HEIC・HEIF・JPEG・PNG・WebP・GIF・BMP・AVIFに対応）</li><li>「<b class=\"ui\">変換先</b>」で「<b class=\"ui\">JPEG</b>」「<b class=\"ui\">PNG</b>」「<b class=\"ui\">WebP</b>」のどれかを選びます（初期設定はJPEG）</li><li>必要に応じて「<b class=\"ui\">画質</b>」のスライダーを調整します（初期値88。下げるほど軽くなります・85前後が目安）</li><li>「<b class=\"ui\">長辺の上限</b>」で「<b class=\"ui\">元のまま</b>」「<b class=\"ui\">2000px</b>」「<b class=\"ui\">1600px</b>」「<b class=\"ui\">1200px</b>」「<b class=\"ui\">800px</b>」から選ぶと、大きい写真を縮小して軽くできます</li><li>「<b class=\"ui\">変換する</b>」ボタンを押します。一覧に「<b class=\"ui\">変換中…</b>」→変換後のサイズが表示されます</li><li>各画像の「<b class=\"ui\">⬇ 保存</b>」で1枚ずつ保存するか、「<b class=\"ui\">ZIPでまとめて保存</b>」で全部を1つのZIPファイルで保存します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>変換後は「<b class=\"ui\">元のサイズ → 変換後のサイズ（−何%）</b>」が表示されるので、どれだけ軽くなったか一目でわかります</li><li>一覧の「<b class=\"ui\">✕</b>」ボタンで、その画像だけ外せます。「<b class=\"ui\">すべてクリア</b>」で全部やり直せます</li><li>ZIP保存時、同じ名前のファイルは自動で連番が付き、上書きされません</li><li>変換先の説明が画面に表示されます（JPEG=写真向き、PNG=透過を保てる・図やスクショ向き、WebP=いちばん軽い）</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>変換はすべて端末の中で行われ、画像はどこにも送信されません。位置情報などのExifも変換時に消えます</li><li>ブラウザがWebPの書き出しに対応していない場合、WebPボタンは押せなくなります</li><li>JPEGは透過を保てないため、透過部分は白地になります。透過を残したいときはPNGを選んでください</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="photo-resizer" data-app>
+      <h3><span class="ic">📐</span>写真リサイザー
+        <a class="open" href="https://choppermoon1623-tech.github.io/photo-resizer/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">たくさんの写真をまとめて縮小・軽量化し、ZIPで一括保存できます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">画像をここへドロップ</b>」の枠に写真を入れるか、クリックして複数選択します</li><li>「<b class=\"ui\">最大幅</b>」「<b class=\"ui\">最大高さ</b>」を数字で指定します（初期値はどちらも1600）</li><li>「<b class=\"ui\">出力形式</b>」で「<b class=\"ui\">JPEG</b>」「<b class=\"ui\">PNG</b>」「<b class=\"ui\">WebP</b>」から選びます</li><li>「<b class=\"ui\">画質</b>」のスライダーを調整します（初期値82%）</li><li>「<b class=\"ui\">一括変換</b>」ボタンを押します</li><li>「<b class=\"ui\">プレビュー</b>」で仕上がりを確認し、「<b class=\"ui\">ZIPで保存</b>」でまとめて保存します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">選択</b>」「<b class=\"ui\">元サイズ</b>」「<b class=\"ui\">変換後</b>」の表示で、枚数と容量の変化がひと目で確認できます</li><li>「<b class=\"ui\">小さい画像は拡大しない</b>」チェック（初期オン）で、もともと小さい画像が引き伸ばされて画質が落ちるのを防げます</li><li>画面右上の「<b class=\"ui\">↺</b>」（リセット）ボタンで最初からやり直せます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>端末内で処理するローカルツールです。写真はどこにも送信されません</li><li>幅・高さは「<b class=\"ui\">上限</b>」の指定です。縦横比は保たれたまま、指定サイズに収まるよう縮小されます</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="id-photo" data-app>
+      <h3><span class="ic">🪪</span>証明写真メーカー
+        <a class="open" href="https://choppermoon1623-tech.github.io/id-photo/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">スマホで撮った顔写真から、履歴書・パスポートなどのサイズの証明写真シートを作り、コンビニで印刷できます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">顔写真をここにドロップ</b>」の枠に写真を入れるか、「<b class=\"ui\">写真を選ぶ</b>」ボタンで選びます（JPEG / PNG / WebP。無地の壁を背に正面から撮った写真がおすすめ）</li><li>読み込むと顔が自動検出され、ガイド線に合う位置へ自動配置されます</li><li>「<b class=\"ui\">サイズ</b>」で用途を選びます。「<b class=\"ui\">履歴書・受験・英検（3×4cm）</b>」「<b class=\"ui\">パスポート・マイナンバー（3.5×4.5cm）</b>」「<b class=\"ui\">運転免許・国家試験（2.4×3cm）</b>」「<b class=\"ui\">カスタム（mm指定）</b>」から選べます</li><li>「<b class=\"ui\">用紙</b>」で「<b class=\"ui\">L判シート（コンビニ印刷用）</b>」「<b class=\"ui\">A4シート</b>」「<b class=\"ui\">1枚だけ（実寸データ）</b>」を選びます</li><li>左の写真をドラッグし、「<b class=\"ui\">ズーム</b>」スライダーで大きさを調整します。頭のてっぺんとあごが緑の線の間に入るように調整してください</li><li>右の「<b class=\"ui\">仕上がりプレビュー</b>」を確認し、「<b class=\"ui\">💾 保存（JPEG・300dpi）</b>」で保存します</li><li>コンビニのマルチコピー機で、保存したシートを「<b class=\"ui\">写真プリント（L判）</b>」で印刷します（1枚30円ほど）</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">🎯 自動位置合わせ</b>」ボタンで、ずらしてしまってもワンタッチで最適位置に戻せます</li><li>「<b class=\"ui\">↻ 90°回転</b>」で横向きに撮った写真を直せます</li><li>「<b class=\"ui\">明るさ</b>」スライダーで顔写りを調整できます</li><li>「<b class=\"ui\">切り取り線</b>」チェックで、シートにハサミ用のガイド線を入れられます</li><li>カスタムサイズ（mm指定）で、指定された特殊なサイズにも対応できます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>写真はこの端末の中だけで処理され、どこにも送信されません</li><li>保存されるのは300dpiの実寸JPEGです。コンビニ印刷では「<b class=\"ui\">L判</b>」を選べばそのままのサイズで印刷されます</li><li>やり直したいときは「<b class=\"ui\">別の写真にする</b>」ボタンで最初から選び直せます</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="face-mosaic" data-app>
+      <h3><span class="ic">🙈</span>顔モザイク
+        <a class="open" href="https://choppermoon1623-tech.github.io/face-mosaic/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">写真の顔を自動で見つけてモザイクをかけ、学級だよりやSNS掲載前のプライバシー保護ができます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">写真をここにドロップ</b>」の枠に写真を入れるか、「<b class=\"ui\">写真を選ぶ</b>」ボタンで選びます（複数枚まとめてOK。JPEG / PNG / WebP）</li><li>読み込むと顔が自動検出され、モザイクがかかります</li><li>仕上がりを直したい写真をタップして編集画面を開きます（「<b class=\"ui\">タップで編集</b>」と表示）</li><li>検出漏れの顔は画像をタップして手動で追加、間違って検出された枠はタップして選択し「<b class=\"ui\">🗑 選択を削除</b>」で消します</li><li>「<b class=\"ui\">加工</b>」で「<b class=\"ui\">モザイク</b>」「<b class=\"ui\">ぼかし</b>」「<b class=\"ui\">黒塗り</b>」「<b class=\"ui\">😊スタンプ</b>」から選び、「<b class=\"ui\">形</b>」（四角/丸）や「<b class=\"ui\">強さ</b>」「<b class=\"ui\">範囲</b>」のスライダーを調整します</li><li>「<b class=\"ui\">✓ 完了</b>」で編集を閉じ、「<b class=\"ui\">💾 すべて保存</b>」でモザイク済みの写真を保存します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">感度</b>」を「<b class=\"ui\">高（多めに検出）</b>」「<b class=\"ui\">標準</b>」「<b class=\"ui\">低（確実なものだけ）</b>」から選び、「<b class=\"ui\">🔍 再検出</b>」で検出をやり直せます</li><li>「<b class=\"ui\">↩ 戻す</b>」で直前の操作を取り消せます。「<b class=\"ui\">全解除</b>」でその写真のモザイクを全部外せます</li><li>各写真に「<b class=\"ui\">💾 保存</b>」ボタンがあり、1枚だけ保存することもできます</li><li>「<b class=\"ui\">＋ 写真を追加</b>」で後から写真を足せます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>写真はこの端末の中だけで処理され、どこにも送信されません</li><li>保存ファイルは元の名前に「<b class=\"ui\">_mosaic</b>」が付きます（元がPNGならPNG、それ以外はJPEGで保存）</li><li>「<b class=\"ui\">すべて保存</b>」は1枚ずつ順にダウンロードされます。ブラウザが「<b class=\"ui\">複数ファイルのダウンロードを許可しますか</b>」と聞いてきたら許可してください</li></ul>
+        </div>
+      </div>
+    </article>
+  </section>
+  <section class="cat" data-cat>
+    <h2 id="cat-ファイル整理">🗂️ ファイル整理 <span class="n"></span></h2>
+    
+    <article class="app" id="file-renamer" data-app>
+      <h3><span class="ic">🏷️</span>一括リネーム
+        <a class="open" href="https://choppermoon1623-tech.github.io/file-renamer/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">フォルダ内のファイル名を、連番・日付・文字の置き換えルールでまとめて変更できます（実行前に全件プレビューで確認できます）。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">📂 フォルダを開く</b>」を押してフォルダを選びます（アクセス許可の確認が出たら許可）。フォルダを直接変更したくない場合は「<b class=\"ui\">🖼️ ファイルを選ぶ（ZIP保存）</b>」やドラッグ＆ドロップでもOK</li><li>「<b class=\"ui\">新しい名前</b>」欄でルールを決めます。難しければ「<b class=\"ui\">よく使う形</b>」の「<b class=\"ui\">そのまま</b>」「<b class=\"ui\">名前_連番</b>」「<b class=\"ui\">連番_名前</b>」「<b class=\"ui\">日付_名前</b>」「<b class=\"ui\">写真_連番</b>」ボタンを押すだけでOK（{name}=元の名前、{num}=連番、{date}=日付。拡張子は自動で残ります）</li><li>特定の文字を消したい・変えたいときは「<b class=\"ui\">置き換え</b>」に「<b class=\"ui\">探す文字（例：IMG_）</b>」と「<b class=\"ui\">置き換え後（空欄で削除）</b>」を入力します</li><li>必要に応じて「<b class=\"ui\">連番</b>」の開始・桁数、「<b class=\"ui\">日付</b>」（ファイルの更新日／今日）、「<b class=\"ui\">並び順</b>」、「<b class=\"ui\">絞り込み</b>」（例：.jpg）を調整します</li><li>「<b class=\"ui\">📋 プレビュー</b>」で変更後の名前を全件確認します（重複や使えない文字があると⚠で教えてくれます）</li><li>「<b class=\"ui\">📂 リネーム実行</b>」（フォルダモード）または「<b class=\"ui\">📦 ZIPで保存</b>」（ファイル選択モード）を押します</li><li>失敗したと思ったら「<b class=\"ui\">↩ 元に戻す</b>」でリネーム前の名前に戻せます</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>実行前にプレビューで全件確認でき、名前の重複・使えない文字は自動でチェックして実行をブロックします</li><li>「<b class=\"ui\">↩ 元に戻す</b>」でリネームをまとめて取り消しできます</li><li>「<b class=\"ui\">絞り込み</b>」で「<b class=\"ui\">.jpg</b>」など特定のファイルだけを対象にできます</li><li>並び順を「<b class=\"ui\">更新日が古い順</b>」などに変えると、撮影順の連番付けができます</li><li>「<b class=\"ui\">↻ 読み直す</b>」でフォルダの中身を再読み込みできます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>「<b class=\"ui\">フォルダを開く</b>」（直接リネーム）はChrome・Edgeでのみ使えます。他のブラウザではZIP保存モードのみです</li><li>処理はすべてブラウザの中だけで行われ、ファイルが端末の外に送信されることはありません</li><li>ZIP保存モードは元ファイルを変更せず、「<b class=\"ui\">リネーム済み_日付.zip</b>」としてコピーをダウンロードします</li></ul>
+        </div>
+      </div>
+    </article>
+  </section>
+  <section class="cat" data-cat>
+    <h2 id="cat-QR・共有">🔗 QR・共有 <span class="n"></span></h2>
+    
+    <article class="app" id="qr-studio" data-app>
+      <h3><span class="ic">🔳</span>QRコード工房
+        <a class="open" href="https://choppermoon1623-tech.github.io/qr-studio/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">QRコードを「<b class=\"ui\">つくる</b>」「<b class=\"ui\">まとめて作る</b>」「<b class=\"ui\">よみとる</b>」が1つでできます（データは端末の外に出ません）。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">つくる</b>」タブで種類を選びます：「<b class=\"ui\">テキスト・URL</b>」「<b class=\"ui\">Wi-Fi</b>」「<b class=\"ui\">メール</b>」「<b class=\"ui\">電話</b>」</li><li>内容を入力すると、その場でQRコードのプレビューが更新されます</li><li>「<b class=\"ui\">QRの下に入れる文字（任意）</b>」に「<b class=\"ui\">例：学級アンケートはこちら</b>」のような説明を入れられます</li><li>必要なら「<b class=\"ui\">読み取りやすさ（誤り訂正）</b>」「<b class=\"ui\">保存サイズ px</b>」「<b class=\"ui\">QRの色</b>」「<b class=\"ui\">背景の色</b>」を調整します</li><li>「<b class=\"ui\">PNG保存</b>」「<b class=\"ui\">SVG保存</b>」「<b class=\"ui\">コピー</b>」で保存、または「<b class=\"ui\">A4に大きく1面／4面／9面／16面</b>」を選んで「<b class=\"ui\">🖨️ 印刷</b>」</li><li>たくさん作るときは「<b class=\"ui\">まとめて作る</b>」タブに1行1つずつ貼り付け→「<b class=\"ui\">まとめて生成</b>」→「<b class=\"ui\">ZIPで全部保存</b>」または列数（印刷 2〜5列）と「<b class=\"ui\">切り取り線</b>」を選んで「<b class=\"ui\">🖨️ 印刷</b>」</li><li>読み取りたいときは「<b class=\"ui\">よみとる</b>」タブで「<b class=\"ui\">📷 カメラ起動</b>」、または画像をドロップ／Ctrl+Vで貼り付け。結果から「<b class=\"ui\">コピー</b>」「<b class=\"ui\">開く</b>」「<b class=\"ui\">この内容でQRを作る</b>」が使えます</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>Wi-Fi用QR：SSIDとパスワードを入れるだけで、スマホのカメラで読むと接続できるQRになります</li><li>まとめて作るとき、「<b class=\"ui\">1班（タブまたはカンマ）URL</b>」の形式で貼ればラベル付きQRになります（「<b class=\"ui\">先頭列をラベルにする</b>」）</li><li>QRの色が薄い・背景と逆のときは「<b class=\"ui\">⚠️ 読み取れない機種があります</b>」と警告が出ます</li><li>入力内容は自動でブラウザに記憶され、次回開いたときに復元されます</li><li>Wi-FiのQRを読み取ると、ネットワーク名・パスワードを表に整理して表示し、パスワードだけをコピーできます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>生成も読み取りもすべて端末内で処理され、データが外部に送信されることはありません</li><li>カメラ読み取りは公開ページ（HTTPS）で開いたときだけ使えます</li><li>まとめて生成は一度に400件までです</li></ul>
+        </div>
+      </div>
+    </article>
+  </section>
+  <section class="cat" data-cat>
+    <h2 id="cat-音声">🎵 音声 <span class="n"></span></h2>
+    
+    <article class="app" id="audio-studio" data-app>
+      <h3><span class="ic">🎙️</span>オーディオスタジオ
+        <a class="open" href="https://choppermoon1623-tech.github.io/audio-studio/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">ブラウザだけで音声のカット・無音詰め・速度/ピッチ変更・ノイズ除去・カラオケ化・AI楽器分離までできる音声編集ツールです。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>音声ファイルを画面にドロップするか「<b class=\"ui\">📂 開く</b>」で選びます（MP3 / WAV / M4A / OGG など）。「<b class=\"ui\">⏺ 録音</b>」でマイクから録音して始めることもできます</li><li>波形をドラッグで範囲選択、クリックで再生位置を移動。「<b class=\"ui\">▶</b>」で再生、「<b class=\"ui\">🔁 ループ</b>」で選択範囲を繰り返し再生します</li><li>上のタブから機能を選びます：「<b class=\"ui\">✂️ 編集</b>」「<b class=\"ui\">🤫 無音カット</b>」「<b class=\"ui\">⏱️ 速度・ピッチ</b>」「<b class=\"ui\">🔊 音量</b>」「<b class=\"ui\">✨ クリア・EQ</b>」「<b class=\"ui\">🎤 ボーカル</b>」「<b class=\"ui\">🥁 楽器分離</b>」「<b class=\"ui\">🤖 AI分離</b>」</li><li>例1（切り出し）：範囲を選んで「<b class=\"ui\">✂️ 選択範囲だけ残す</b>」または「<b class=\"ui\">🗑️ 選択範囲を削除</b>」</li><li>例2（間詰め）：「<b class=\"ui\">🔍 無音を検出（プレビュー）</b>」→オレンジ表示を確認→「<b class=\"ui\">✂️ 無音をカットする</b>」</li><li>例3（聞き取り教材）：「<b class=\"ui\">⏱️ 速度・ピッチ</b>」でスライダーを動かして「<b class=\"ui\">適用</b>」、または「<b class=\"ui\">✨ クリア・EQ</b>」の「<b class=\"ui\">🗣️ 声を聞き取りやすくする</b>」をワンタッチ</li><li>失敗しても「<b class=\"ui\">↩ 元に戻す</b>」「<b class=\"ui\">↪ やり直す</b>」でいつでも取り消せます</li><li>仕上がったら「<b class=\"ui\">💾 WAV</b>」「<b class=\"ui\">💾 MP3</b>」で保存します。分離結果は各パートごとに「<b class=\"ui\">▶</b>」「<b class=\"ui\">💾 WAV</b>」「<b class=\"ui\">💾 MP3</b>」「<b class=\"ui\">✏️ エディタで開く</b>」が使えます</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">💾 選択範囲だけWAV書き出し</b>」で必要な部分だけ保存できます</li><li>ノイズ除去は「<b class=\"ui\">1️⃣ ノイズだけの区間を選択して学習</b>」してから実行すると精度が上がります</li><li>速度・ピッチ・音量などは範囲選択中ならその範囲だけに適用されます</li><li>「<b class=\"ui\">🥁 楽器分離</b>」はネット接続不要・数秒〜数十秒で、ドラムとメロディの2つに分けられます</li><li>「<b class=\"ui\">🤖 AI分離</b>」はボーカル/ドラム/ベース/その他の4パートに本格分離できます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>ファイルはPCの外に送信されません（AI分離のモデル取得時とMP3エンコーダの読み込み時のみ通信が必要です）</li><li>AI分離は初回のみ数十MBのモデルをダウンロードし、曲の長さによって数分かかります。10分を超える音源は分割してから実行してください（楽器分離は12分まで）</li><li>「<b class=\"ui\">🎤 ボーカルカット</b>」はステレオ音源専用です。モノラル音源には使えません（その場合はAI分離へ）</li></ul>
+        </div>
+      </div>
+    </article>
+  </section>
+  <section class="cat" data-cat>
+    <h2 id="cat-教室・進行">🏫 教室・進行 <span class="n"></span></h2>
+    
+    <article class="app" id="big-timer" data-app>
+      <h3><span class="ic">⏱️</span>大型タイマー
+        <a class="open" href="https://choppermoon1623-tech.github.io/big-timer/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">教室のスクリーンやプロジェクタに大きく映せる、円形メーター付きのカウントダウンタイマー＆ストップウォッチです。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">カウントダウン</b>」か「<b class=\"ui\">ストップウォッチ</b>」を選びます</li><li>カウントダウンなら「<b class=\"ui\">1分</b>」〜「<b class=\"ui\">45分</b>」のプリセットボタンを押すか、「<b class=\"ui\">分</b>」「<b class=\"ui\">秒</b>」の欄に直接入力します</li><li>「<b class=\"ui\">▶ スタート</b>」で開始します（もう一度押すと「<b class=\"ui\">❚❚ 一時停止</b>」）</li><li>「<b class=\"ui\">↺ リセット</b>」で最初からやり直せます</li><li>発表会や授業では「<b class=\"ui\">⛶ 全画面</b>」にして「<b class=\"ui\">⌃ パネル</b>」で操作パネルを隠すとすっきり大きく映せます</li><li>「<b class=\"ui\">🔔 音 ON</b>」を押すと終了チャイムのオン/オフを切り替えられます</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>キーボード操作：Space（スタート/一時停止）、R（リセット）、F（全画面）、H（パネル表示切替）、1〜9（その分数をセット）</li><li>残り1分で黄色、残り10秒で赤に変わり、終了すると画面が点滅してチャイムが鳴ります（残り3・2・1秒には刻み音）</li><li>残り1分未満は0.1秒単位の表示になり緊張感が伝わります</li><li>タイマー動作中は画面が自動スリープしにくくなります（対応ブラウザ）</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>音はブラウザの仕様上、一度画面を操作（スタート等）してからでないと鳴らないことがあります</li><li>ブラウザのタブのタイトルにも残り時間が表示されるので、別タブ作業中でも確認できます</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="name-roulette" data-app>
+      <h3><span class="ic">🎯</span>ランダム指名ルーレット
+        <a class="open" href="https://choppermoon1623-tech.github.io/name-roulette/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">クラスの名簿から1人を、スロットマシン／ルーレットの演出つきでランダムに指名できます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">👥 名簿</b>」を押し、1行に1人ずつ名前を貼り付けます（Excelの列コピーそのままでOK。行頭の出席番号「<b class=\"ui\">1.</b>」「<b class=\"ui\">01 </b>」などは自動で外れます）</li><li>「<b class=\"ui\">✓ この名簿を使う</b>」を押します</li><li>「<b class=\"ui\">🎯 スタート</b>」で抽選開始（Spaceキーや画面クリックでもOK）</li><li>当選者が画面いっぱいに表示され、紙吹雪とファンファーレでお祝いされます</li><li>「<b class=\"ui\">✋ 選ばれた人は除外</b>」をオンにしておくと、同じ人が2回選ばれません。全員選ばれたら「<b class=\"ui\">↺ リセット</b>」でもう一周</li><li>名簿画面で「<b class=\"ui\">クラス名（例：2年3組）</b>」を入れて「<b class=\"ui\">💾 保存</b>」すると、次回から「<b class=\"ui\">📚 保存したクラス…</b>」で呼び出せます</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">🎰 スロット</b>」ボタンで演出を「<b class=\"ui\">🎡 ルーレット</b>」と切り替えられます</li><li>画面下部に選ばれた人の履歴が番号付きで並ぶので、指名順の記録になります</li><li>複数クラスの名簿を保存でき、不要になったら「<b class=\"ui\">🗑</b>」で削除できます</li><li>「<b class=\"ui\">🔊 音</b>」で効果音のオン/オフ、「<b class=\"ui\">⌃ パネル</b>」で操作ボタンを隠して大きく映せます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>名簿・履歴・設定はブラウザ内に保存されます。同じPC・同じブラウザで開いたときだけ引き継がれます</li><li>名簿の内容を変更して「<b class=\"ui\">この名簿を使う</b>」を押すと、抽選履歴はリセットされます</li><li>「<b class=\"ui\">リセット</b>」ボタンは履歴（選ばれた人の記録）を消すもので、名簿自体は消えません</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="submit-check" data-app>
+      <h3><span class="ic">✅</span>QR提出チェック
+        <a class="open" href="https://choppermoon1623-tech.github.io/submit-check/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">名簿から児童生徒ごとのQRシールを印刷し、提出物のノートをカメラで「<b class=\"ui\">ピッ</b>」と読むだけで提出簿が作れます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">1 名簿</b>」タブで、クラスの名簿を1行1人で貼り付け、「<b class=\"ui\">名簿に取り込む</b>」を押します（番号は自動で付きます。「<b class=\"ui\">1 山田　太郎</b>」のように番号つきでもOK）</li><li>「<b class=\"ui\">2 シール印刷</b>」タブで用紙を選びます（A4ラベル24面／44面／65面、または「<b class=\"ui\">普通紙（切ってのり・テープで貼る）</b>」）</li><li>必要なら「<b class=\"ui\">シールに入れるメモ（任意・例：国語ノート)</b>」を入力し、「<b class=\"ui\">🖨️ 印刷する</b>」を押します</li><li>印刷したQRシールを、ノートやワークの表紙に貼らせておきます</li><li>提出物を集めたら「<b class=\"ui\">3 スキャン</b>」タブで提出物名を選び（「<b class=\"ui\">＋ 新規</b>」で作成）、「<b class=\"ui\">📷 スキャン開始</b>」を押してシールのQRを次々かざします</li><li>「<b class=\"ui\">4 記録</b>」タブで提出簿を確認します（「<b class=\"ui\">未提出だけ表示</b>」にチェックすると未提出者だけに絞れます）</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">名簿QRを表示</b>」…PCで作った名簿をQRにして表示し、スマホでこのページを開いて「<b class=\"ui\">スキャン</b>」タブで読み取ると、スマホに名簿がそのまま入ります（シール作成はPC・スキャンはスマホという使い分けができます）</li><li>「<b class=\"ui\">CSV保存</b>」「<b class=\"ui\">未提出者をコピー</b>」…提出記録をCSVで保存したり、未提出者の名前一覧をコピーして連絡に使えます</li><li>記録タブの名前をタップすると手動でチェック／解除できます（QRが読めなかった時の保険）</li><li>「<b class=\"ui\">🔦 ライト</b>」ボタン（対応スマホのみ）で暗い場所でも読み取りやすくなります</li><li>クラス・提出物は複数作れます（「<b class=\"ui\">＋ 新しいクラス</b>」「<b class=\"ui\">＋ 新規</b>」「<b class=\"ui\">名前変更</b>」「<b class=\"ui\">クラス削除</b>」「<b class=\"ui\">この記録を削除</b>」）</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>カメラは公開ページ（HTTPS）で開いたときだけ使えます。HTMLファイルを直接開いている場合は公開URLから使ってください</li><li>シール印刷時は印刷ダイアログで「<b class=\"ui\">用紙A4・余白なし・倍率100%</b>」（「<b class=\"ui\">ページに合わせる</b>」はオフ）に。ずれる時は「<b class=\"ui\">上余白 mm</b>」「<b class=\"ui\">左余白 mm</b>」で微調整できます</li><li>名簿や提出記録はブラウザ内に保存され、端末の外には送信されません。別のPC・ブラウザにはデータは引き継がれません</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="group-maker" data-app>
+      <h3><span class="ic">🧩</span>班分けメーカー
+        <a class="open" href="https://choppermoon1623-tech.github.io/group-maker/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">条件つきシャッフルで公平な班分けができ、前回と同じ顔ぶれもなるべく避けられます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">名簿</b>」欄に1行1人で名前を貼り付け、「<b class=\"ui\">名簿に取り込む</b>」を押します（タブやカンマで「<b class=\"ui\">山田　太郎 男</b>」のように属性も付けられます）</li><li>必要なら名簿の名前をクリックして「<b class=\"ui\">★リーダー</b>」に指定します</li><li>「<b class=\"ui\">分け方</b>」で「<b class=\"ui\">班の数</b>」か「<b class=\"ui\">1班の人数</b>」を選んで数字を入れます</li><li>オプションを確認します（「<b class=\"ui\">★リーダーを各班に配る</b>」「<b class=\"ui\">属性(男女など)を各班に均等にする</b>」「<b class=\"ui\">記録した過去の班分けと同じ相手をなるべく避ける</b>」）</li><li>特定の2人がいれば「<b class=\"ui\">ペアの条件</b>」で2人を選び、「<b class=\"ui\">🤝 いっしょの班にする</b>」または「<b class=\"ui\">↔️ 別の班にする</b>」を押します</li><li>「<b class=\"ui\">🎲 班分けする</b>」を押します</li><li>結果に納得したら「<b class=\"ui\">📌 この班分けを記録する</b>」を押しておきます（次回、同じ相手となるべく別の班になります）</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>結果は手直しできます…名前をクリック→もう1人をクリックで入れ替え、班の見出しをクリックで移動</li><li>「<b class=\"ui\">コピー</b>」「<b class=\"ui\">CSV</b>」「<b class=\"ui\">🖨️ 印刷</b>」で結果を配布・保存できます</li><li>クラスは複数保存できます（「<b class=\"ui\">＋</b>」で追加、「<b class=\"ui\">削除</b>」で削除）</li><li>過去の記録は「<b class=\"ui\">記録をクリア</b>」でリセットできます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>名簿はブラウザ内に保存され、端末の外には出ません</li><li>「<b class=\"ui\">同じ相手を避ける</b>」は「<b class=\"ui\">📌 この班分けを記録する</b>」を押した回だけが対象です。押し忘れると次回に反映されません</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="seat-maker" data-app>
+      <h3><span class="ic">🪑</span>席替えメーカー
+        <a class="open" href="https://choppermoon1623-tech.github.io/seat-maker/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">条件（離す・となり・前の方）つきのシャッフルで席替えをして、発表モードで1席ずつドキドキ発表までできます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">👥 名簿</b>」を押し、1行1人で名前を貼り付けて「<b class=\"ui\">✓ この名簿を使う</b>」を押します</li><li>「<b class=\"ui\">たて(行)</b>」「<b class=\"ui\">よこ(列)</b>」「<b class=\"ui\">前方とみなす列数</b>」を教室に合わせて選びます</li><li>使わない席があれば「<b class=\"ui\">🚫 席を使う/使わない</b>」モードにして席をクリックします</li><li>条件を設定します…「<b class=\"ui\">💥 はなすペア</b>」「<b class=\"ui\">🤝 となりペア</b>」は2人を選んで「<b class=\"ui\">追加</b>」、「<b class=\"ui\">👓 前の方にする</b>」は1人を選んで「<b class=\"ui\">追加</b>」</li><li>特定の席に座らせたい子は「<b class=\"ui\">📌 固定</b>」モードで席をクリックし、「<b class=\"ui\">✓ 固定する</b>」</li><li>「<b class=\"ui\">🎲 席替えする！</b>」を押します</li><li>発表するときは「<b class=\"ui\">📽️ 発表モードへ</b>」→「<b class=\"ui\">🙈 隠す</b>」→プロジェクタに映してから「<b class=\"ui\">📣 オープン</b>」で1席ずつ発表（もう一度押すと「<b class=\"ui\">⏹ 全部表示</b>」）</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">↔ 入れ替え</b>」モードで、結果を見てから2席を手動で入れ替えられます</li><li>「<b class=\"ui\">🖨️ 印刷</b>」「<b class=\"ui\">🖼️ PNG保存</b>」で座席表を配布・掲示用に出力できます</li><li>名簿は「<b class=\"ui\">💾 保存</b>」でクラス名を付けて複数保存でき、「<b class=\"ui\">📚 保存したクラス…</b>」から呼び出せます（「<b class=\"ui\">ランダム指名ルーレット</b>」で保存したクラスも読み込めます）</li><li>発表モードでは作業用のボタン類が隠れるので、投影しても条件設定などのタネが見えません</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>名簿や設定はブラウザ内に保存されます。端末の外には送信されません</li><li>発表の手順は「<b class=\"ui\">隠す</b>」→投影→「<b class=\"ui\">オープン</b>」の順。先に映してから隠すと見えてしまうので注意</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="toban-maker" data-app>
+      <h3><span class="ic">🧹</span>当番表メーカー
+        <a class="open" href="https://choppermoon1623-tech.github.io/toban-maker/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">班がぐるっと回る円盤型の当番表（そうじ・給食・係）と、週ごとの一覧表、日直の順番表が作れます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">📝 タイトル</b>」を入力します（例:当番表）</li><li>「<b class=\"ui\">🧩 班(回る側)</b>」に1行1班で入力します（「<b class=\"ui\">1班 さとう すずき</b>」のように班名の後にスペース区切りで名前も書けます）。「<b class=\"ui\">例を入れる</b>」でサンプルも入ります</li><li>「<b class=\"ui\">🪣 仕事・場所(固定側)</b>」に1行1つで仕事を入力します（「<b class=\"ui\">そうじ</b>」「<b class=\"ui\">給食</b>」「<b class=\"ui\">係</b>」ボタンでよくある例が入ります）</li><li>「<b class=\"ui\">🎡 円盤</b>」タブで当番表を確認し、週が変わったら「<b class=\"ui\">次の週へ回す ▶</b>」（戻すときは「<b class=\"ui\">◀ 前の週</b>」）</li><li>「<b class=\"ui\">🖨️ 印刷</b>」または「<b class=\"ui\">💾 PNG保存</b>」で出力します</li><li>一覧が欲しいときは「<b class=\"ui\">📋 表</b>」タブで「<b class=\"ui\">週数</b>」「<b class=\"ui\">開始日(週の初日)</b>」を設定して「<b class=\"ui\">🖨️ 印刷</b>」</li><li>日直は「<b class=\"ui\">☀️ 日直</b>」タブで名簿（1行1人）と「<b class=\"ui\">1日あたり○人</b>」「<b class=\"ui\">開始日</b>」「<b class=\"ui\">期間○日</b>」を設定して「<b class=\"ui\">🖨️ 印刷</b>」</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>「<b class=\"ui\">切り取り工作用に2枚で印刷(外側と内側を分ける)</b>」…内側の円を切り取り、外側の台紙に重ねて中心を割りピンでとめると、教室に貼れる「<b class=\"ui\">回す当番表</b>」が作れます</li><li>「<b class=\"ui\">表</b>」タブは週数を空欄にすると、ちょうど1周分を自動で作成。「<b class=\"ui\">メンバーも表示</b>」の切り替えも可能です</li><li>日直は「<b class=\"ui\">土日をとばす</b>」にチェックすると平日だけで順番が回ります</li><li>円盤の金色の枠が現在位置なので、教室掲示と画面の両方で今週の当番がわかります</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>入力内容はブラウザ内に自動保存されます。同じPC・同じブラウザで開けば続きから使えます</li><li>班の数と仕事の数が違ってもOK（足りない分は自動調整されます）。印刷はA4です</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="tournament-maker" data-app>
+      <h3><span class="ic">🏆</span>トーナメント・対戦表
+        <a class="open" href="https://choppermoon1623-tech.github.io/tournament-maker/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">名前を貼り付けるだけでトーナメント表（勝ち上がり式）と総当たりの星取表が作れ、結果の記録までできます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>「<b class=\"ui\">📝 タイトル</b>」を入力します（例:クラス対抗リレー）</li><li>「<b class=\"ui\">👥 チーム・選手</b>」に1行1つで入力します（人でもチームでもOK・32まで）。「<b class=\"ui\">例を入れる</b>」でサンプルも入ります</li><li>組み合わせ抽選をしたいときは「<b class=\"ui\">🎲 順番シャッフル</b>」を押します（上の行から順に山へ配置されます）</li><li>「<b class=\"ui\">🏆 トーナメント</b>」タブで、試合が終わるたびに勝った名前をクリック→勝ち上がり（もう一度クリックで取り消し）</li><li>リーグ戦なら「<b class=\"ui\">🔁 総当たり</b>」タブで、マスをクリックして「<b class=\"ui\">○(勝ち)→●(負け)→△(引き分け)→空欄</b>」を記録します（相手側のマスにも自動で入ります）</li><li>「<b class=\"ui\">🖨️ 印刷(横向き)</b>」（トーナメント）または「<b class=\"ui\">🖨️ 印刷</b>」（総当たり）で配布用を出力します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>人数が半端なときは不戦勝（シード）を自動で配分してくれます</li><li>トーナメント表は「<b class=\"ui\">💾 PNG保存</b>」で画像として保存でき、学級通信やスライドに貼れます</li><li>総当たり表は勝・分・敗と順位を自動集計。「<b class=\"ui\">対戦の順番(組み合わせ)も表示する</b>」にチェックすると試合順の一覧も付きます</li><li>記録は「<b class=\"ui\">記録をリセット</b>」でやり直せます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>トーナメントの印刷は自動でA4横向き、総当たりはA4縦向きになります</li><li>参加者は32まで。入力の順番がそのまま山の配置になるので、抽選したいときは印刷前にシャッフルを</li><li>入力と勝敗の記録はブラウザ内に自動保存されます。端末の外には送信されません</li></ul>
+        </div>
+      </div>
+    </article>
+    <article class="app" id="jikanwari-maker" data-app>
+      <h3><span class="ic">🗓️</span>週時間割メーカー
+        <a class="open" href="https://choppermoon1623-tech.github.io/jikanwari-maker/" target="_blank" rel="noopener">アプリを開く ↗</a></h3>
+      <p class="lede">学年×クラスと担当の先生を一度登録しておけば、不在や部会を避けた週の時間割をワンクリックで自動生成できます。</p>
+      <div class="cols">
+        <div>
+          <h4>🔰 使い方</h4>
+          <ol><li>初回は「<b class=\"ui\">⚙ 設定（マスタ）</b>」で自校を登録します。「<b class=\"ui\">基本</b>」タブで学年とクラス数（各1〜5）、「<b class=\"ui\">教員</b>」タブで名簿、「<b class=\"ui\">担当割当</b>」タブでクラス×教科ごとの担当を選びます（「<b class=\"ui\">各学年の1組の担当を同学年の全クラスへコピー</b>」で時短できます）</li><li>毎週の作成は「<b class=\"ui\">① 今週の器</b>」で曜日ごとのコマ数を確認します（午前授業の日は4など）</li><li>「<b class=\"ui\">② 教員の不在コマ</b>」で出張・年休のコマをクリックで塗ります（ダブルクリックでその曜日を終日一括）</li><li>「<b class=\"ui\">③ 部会・委員会</b>」で開催コマを選ぶと、メンバーの授業がそのコマに入らなくなります</li><li>「<b class=\"ui\">④ 今週の教科コマ数</b>」で各クラスのコマ数を確認し、総合・学活・道徳・行事は時間割のセルに直接入力します（セルをダブルクリック→「<b class=\"ui\">全クラスに適用</b>」が便利）。全クラスの過不足が±0になると生成ボタンが押せます</li><li>「<b class=\"ui\">⚙ 自動生成</b>」を押します。気に入らなければ「<b class=\"ui\">↻ 再生成（別解）</b>」、残したいコマは🔒ロックしてから再生成します</li><li>「<b class=\"ui\">⧉ Excelへコピー</b>」や「<b class=\"ui\">🖨 印刷</b>」で出力します</li></ol>
+        </div>
+        <div>
+          <h4>✨ 便利機能</h4>
+          <ul class="feat"><li>セルはキーボードで素早く入力できます（1〜0＝教科、Q総合・W学活・E道徳・R行事、Lロック、Space/Delクリア、矢印キーで移動）</li><li>「<b class=\"ui\">👤 担当表示</b>」でセルの下に担当者名を小さく表示、「<b class=\"ui\">🎨 色分け</b>」で教科ごとの色分けを切り替えられます</li><li>「<b class=\"ui\">⑥ 教員別時間割・負荷</b>」で先生ごとの週の持ちコマと空きが一目でわかります（教員別の印刷も可）</li><li>教員の重複・不在違反などのエラーは赤、朝1限の実技などの注意は黄色で自動表示されます</li><li>編集は自動でブラウザにバックアップされ、次回開いたとき復元できます。「<b class=\"ui\">保存</b>」でJSONファイルにも残せます</li></ul>
+          <h4>⚠️ 注意・コツ</h4>
+          <ul class="note"><li>「<b class=\"ui\">設定のみ書き出し</b>」を使うと、学校設定だけをファイルにして別のPCや翌年度・他校に引き継げます</li><li>生成しきれないときは理由（担当が他クラスで埋まっている・不在が多い等）が表示されるので、固定枠・不在・コマ数を見直してください</li><li>時間割データは端末内だけで処理され、外部に送信されません</li></ul>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <div class="empty" id="empty">該当する説明が見つかりませんでした。</div>
+
+  <a class="totop" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ 上へ</a>
+
+  <footer>
+    <span>孫の手 ／ H.M Works</span>
+    <a href="./">🖐️ 孫の手トップへ →</a>
+  </footer>
+</div>
+
+<script>
+(function(){
+  document.querySelectorAll('[data-cat]').forEach(sec => {
+    sec.querySelector('.n').textContent = sec.querySelectorAll('article.app').length + 'アプリ';
+  });
+  const q = document.getElementById('q'), empty = document.getElementById('empty');
+  q.addEventListener('input', () => {
+    const t = q.value.trim().toLowerCase();
+    let hit = 0;
+    document.querySelectorAll('[data-cat]').forEach(sec => {
+      let n = 0;
+      sec.querySelectorAll('article.app').forEach(c => {
+        const show = !t || c.textContent.toLowerCase().indexOf(t) >= 0;
+        c.classList.toggle('hidden', !show);
+        if(show) n++;
+      });
+      sec.classList.toggle('hidden', n === 0);
+      hit += n;
+    });
+    empty.classList.toggle('show', hit === 0);
+  });
+})();
+</script>
+</body>
+</html>
