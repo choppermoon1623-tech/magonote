@@ -31,6 +31,7 @@
 | [当番表メーカー](https://choppermoon1623-tech.github.io/toban-maker/) | 学期はじめのたびに当番表を画用紙で手作りしている |
 | [トーナメント・対戦表](https://choppermoon1623-tech.github.io/tournament-maker/) | 球技大会のトーナメントの線を毎回手描きしている |
 | [ふりがな付け](https://choppermoon1623-tech.github.io/furigana/) | 低学年や外国籍の子向けのおたよりに、ルビを1つずつ振っている |
+| [週時間割メーカー](https://choppermoon1623-tech.github.io/jikanwari-maker/) | 先生の予定を突き合わせながらの週時間割づくりに毎週何時間もかかっている |
 
 ## 道具を増やすとき
 
