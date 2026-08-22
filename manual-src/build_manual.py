@@ -39,6 +39,7 @@ CATS = [
         ("🧹", "当番表メーカー", "toban-maker"),
         ("🏆", "トーナメント・対戦表", "tournament-maker"),
         ("🗓️", "週時間割メーカー", "jikanwari-maker"),
+        ("✏️", "学習プリントメーカー", "print-maker"),
     ]),
 ]
 BASE = "https://choppermoon1623-tech.github.io/"
